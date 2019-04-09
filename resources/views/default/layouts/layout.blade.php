@@ -30,7 +30,7 @@
             <a class="p-2 text-dark" href="{{route('aboutUs')}}">About</a>
             <a class="p-2 text-dark" href="{{route('article', array('id' => 10))}}">Article</a>
             <a class="p-2 text-dark" href="{{route('article', array('id' => 10))}}">Article</a>
-            <a class="p-2 text-dark" href="{{route('contact', array('id'=>10))}}">Contact</a>
+            <a class="p-2 text-dark" href="{{route('contact')}}">Contact</a>
         </nav>
         <a class="btn btn-outline-primary" href="#">Sign up</a>
     </div>

@@ -21,6 +21,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'comments/',
         'pages/',
-        'contact/10'
+        'contact/'
     ];
 }

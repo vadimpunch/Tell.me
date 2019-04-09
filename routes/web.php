@@ -99,3 +99,5 @@ Route::group(array(
 });
 
 Route::match(['get', 'post'], '/contact/{id?}', 'ContactController@show')->name('contact');
+Route::get( '/contact/', 'ContactController@show')->name('contact');
+Route::post('/contact/', 'ContactController@store');

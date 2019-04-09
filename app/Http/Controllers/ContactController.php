@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +16,7 @@ class ContactController extends Controller
 //        $this->request = $request;
 //    }
 
-    public function show(Request $request, $id = false)
+    public function store(ContactRequest $request, $id = false)
     {
 
 //        $a = $request->input('email', 'Default');
@@ -60,8 +62,34 @@ class ContactController extends Controller
 //        DB::delete('DELETE FROM articles WHERE id = ?', [1]);
 //        $articles = DB::select("SELECT * FROM `articles`");
 //            DB::statement('DROP TABLE articles');
-        $articles = DB::select("SELECT * FROM `articles`");
+//        $articles = DB::select("SELECT * FROM `articles`");
+
+        if ($request->isMethod('post'))
+        {
+//            $rules = [
+//                'name'=>'unique:users'
+////                'email'=>'required|email'
+//            ];
+//            $this->validate($request, $rules);
+
+//            $messages = [];
+//            $validator = Validator::make($request->all(), [
+//                'name'=>'required'
+//            ], $messages);
+//
+//            if ($validator->fails()) {
+//               return redirect()->route('contact')->withErrors($validator)->withInput();
+//            }
+
+        }
         return view('default.contact');
 
+    }
+
+    public function show()
+    {
+
+
+        return view('default.contact');
     }
 }

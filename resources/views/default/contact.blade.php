@@ -1,12 +1,24 @@
 @extends('default.layouts.layout')
 
 
-{{print_r(Session::all())}}
+{{--{{print_r(Session::all())}}--}}
 @section('content')
-    <form action="{{route('contact', array('id'=>10))}}" method="post">
+
+    @if(count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+            </ul>
+        </div>
+        @endif
+    <form action="/contact/" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" value="{{old('email')}}" name='email'class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="text" value="{{old('name')}}" name='name'class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name">
+            <input type="text" value="{{old('email')}}" name='email' class="form-control"  aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="text" value="{{old('text')}}" name='text' class="form-control"  aria-describedby="emailHelp" placeholder="Enter text">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">

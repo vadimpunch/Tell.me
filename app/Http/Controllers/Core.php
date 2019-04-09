@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Country;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -185,6 +188,137 @@ class Core extends Controller
 //        $article = Article::find('3');
 //        $article->forceDelete();
 
+
+//        dump($articles);
+
+//        $user = User::find('1');
+//        $country = Country::find(1);
+//        dump($country->user);
+
+//        $article = Article::find(1);
+//        $article->user;
+
+//        $user = User::find(1);
+//
+//        $articles = $user->articles()->where('id', 10)->first();
+
+//        $user = User::find('1');
+//
+//
+//        foreach ($user->roles as $role){
+//            dump($role->name);
+//        }
+
+
+//        $user = User::find(1);
+//       $role = $user->roles()->where('roles.id', 1)->first();
+
+//        $role = Role::find(1);
+//
+////        $role->users;
+//        dump($role->users->naem);
+        /**
+         * ЖАДНАЯ ЗАГРУЗКА
+         */
+//        $articles = Article::with('user')->get();
+
+//        foreach ($articles as $article) {
+//            dump($article->user->name);
+//        }
+
+//        $articles = Article::all();
+//        $articles->load('user');
+
+//        $users = User::with('articles', 'roles')->get();
+//
+//        foreach ($users as $user) {
+//            dump($user->articles);
+//        }
+
+//        $users = User::has('articles')->get();
+
+//        $users = User::has('articles', '>=', '3');
+//        foreach ($users as $user) {
+//            dump($user->articles);
+//        }
+
+//        $user = User::find(1);
+//        $article = new Article(
+//            array(
+//                'name' => 'New Article By User',
+//                'text' => 'Lorem ipsum'
+//            )
+//        );
+
+//        $user->articles()->save($article);
+//        или
+//        $user->articles()->saveMany($articles);
+//
+//        $articles = Article::all();
+
+//        $user->articles()->create(
+//            array(
+//                'name' => 'New Article By User',
+//                'text' => 'Lorem ipsum'
+//            )
+//        );
+
+//        $role = new Role(
+//            array(
+//                'name' => 'Гость'
+//            )
+//        );
+//
+//        $user->roles()->save($role);
+
+//            $user = User::find('1');
+//
+//            $user->articles()->where('id', '19')->update(
+//                array(
+//                    'name' => 'New Text'
+//                )
+//            );
+//
+//            $article = Article::find(19);
+//            dump($article);
+
+
+//$country = Country::find(1);
+//
+//$user = User::find(2);
+//
+//$country->user()->associate($user);
+//$country->save();
+
+//        $articles = Article::all();
+//
+//        $user = User::find(2);
+//
+//
+//        foreach ($articles as $article) {
+//
+//            $article->user()->associate($user);
+//            $article->save();
+//        }
+
+
+//        $user = User::find(2);
+//        $roleId = Role::find(2)->id;
+//
+////        $user->roles()->attach($roleId);
+//        $user->roles()->detach($roleId);
+
+
+
+        $article = Article::find(1);
+//        dump($article);
+         $article->name = 'Some text';
+
+         echo $article->name;
+
+
+
+//        dump($articles);
 
 //        dump($articles);
     }

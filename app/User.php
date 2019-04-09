@@ -39,6 +39,17 @@ class User extends Authenticatable
 
     public function country()
     {
-            $this->hasOne('App\Country');
+          return  $this->hasOne('App\Country');
+//          return  $this->hasOne('App\Country', 'foreign_key', 'id');
+    }
+
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+
+    public  function roles()
+    {
+        return $this->belongsToMany('App\Role');
     }
 }
