@@ -45,16 +45,16 @@ Route::match(['get', 'post'], '/comments', function () {
     dd($_POST);
 });
 
-Route::group(['prefix' => 'admin'], function () {
-
-    Route::get('page/create', function () {
-        return redirect()->route('article', array('id' => 25));
-    });
-
-    Route::get('page/edit', function () {
-        dd("Page edited");
-    });
-});
+//Route::group(['prefix' => 'admin'], function () {
+//
+//    Route::get('page/create', function () {
+//        return redirect()->route('article', array('id' => 25));
+//    });
+//
+//    Route::get('page/edit', function () {
+//        dd("Page edited");
+//    });
+//});
 
 //Route::get('article/{id}', function ($id) {
 //
@@ -98,6 +98,26 @@ Route::group(array(
 
 });
 
-Route::match(['get', 'post'], '/contact/{id?}', 'ContactController@show')->name('contact');
-Route::get( '/contact/', 'ContactController@show')->name('contact');
-Route::post('/contact/', 'ContactController@store');
+//Route::match(['get', 'post'], '/contact/{id?}', 'ContactController@show')->name('contact');
+Route::get( '/contact/', array(
+    'uses' => 'ContactController@show'
+))->name('contact');
+Route::post('/contact', 'ContactController@store');
+
+Auth::routes();
+
+Route::group(['middleware' => 'web'], function () {
+
+});
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix'=>'admin', 'middleware' => ['web', 'auth']], function () {
+Route::get('/', 'Admin\AdminController@show')->name('admin_index');
+Route::get('/add/post', 'Admin\AdminPostController@show')->name('admin_add_post');
+Route::post('/add/post', 'Admin\AdminPostController@create')->name('admin_add_post_p');
+Route::get('/update/post/{id}', 'Admin\PostUpdateController@show')->name('admin_update_post');
+Route::post('/update/post/', 'Admin\PostUpdateController@update')->name('admin_update_post_p');
+
+});

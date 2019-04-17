@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Contracts\SaveStr;
 use App\Http\Requests\ContactRequest;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Session;
+use Lang;
+
+
+
 
 class ContactController extends Controller
 {
+
+
+    protected static $singleton;
 //    protected $request;
 //
 //    public function __construct(Request $request)
@@ -16,8 +27,9 @@ class ContactController extends Controller
 //        $this->request = $request;
 //    }
 
-    public function store(ContactRequest $request, $id = false)
+    public function store(Request $request, $id = false, SaveStr $saveStr)
     {
+
 
 //        $a = $request->input('email', 'Default');
 //       if ($request->has('email')){
@@ -64,32 +76,90 @@ class ContactController extends Controller
 //            DB::statement('DROP TABLE articles');
 //        $articles = DB::select("SELECT * FROM `articles`");
 
-        if ($request->isMethod('post'))
-        {
+        dd(Lang::$app);
+        $var = App::make('App\Helpers\Contracts\SaveStr');
+
+        $var->save($request, $request->user());
+
+        if ($request->isMethod('post')) {
 //            $rules = [
 //                'name'=>'unique:users'
 ////                'email'=>'required|email'
 //            ];
 //            $this->validate($request, $rules);
 
-//            $messages = [];
-//            $validator = Validator::make($request->all(), [
-//                'name'=>'required'
-//            ], $messages);
-//
-//            if ($validator->fails()) {
-//               return redirect()->route('contact')->withErrors($validator)->withInput();
-//            }
+            $messages = [
+                'name.required' => 'Поле :attribute обязательно к заполнению'
+            ];
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+//                'email'=>'required'
+            ], $messages);
+
+            $validator->sometimes('email', 'required', function ($input) {
+
+                return strlen($input->name) >= 10;
+            });
+
+
+            $validator->after(function ($validator) {
+
+                $validator->errors()->add('name', 'Доп мессаге');
+            });
+
+            if ($validator->fails()) {
+
+                $messages = $validator->errors();
+
+                dd($validator->failed());
+//                if ($messages->has('name'))
+//                {
+//                    dump($messages->all('<p>:message</p>>'));
+//                }
+//                dump($messages->first());
+//                dump($messages->get('name'));
+//                dump($messages->all());
+                return redirect()->route('contact')->withErrors($validator)->withInput();
+            }
 
         }
         return view('default.contact');
 
     }
 
-    public function show()
+    public function show(Request $request)
     {
 
+//        $result =$request->session()->get('key', 'default');
+//        $result =$request->session()->all();
+//          $request->session()->put('key.first', 'value');
 
-        return view('default.contact');
+//          if ($request->session()->has('key.first'))
+//
+//          {
+////              dump($request->session()->all());
+//          }
+
+        $result = $request->session()->all();
+//        $request->session()->push('key.second', 'value2');
+//        Session::push('key.second', 'value2');
+//       session(['key2' => 'value 3']);
+//        Session::forget('key2');
+//        Session::flush();
+//       dump(Session::pull('key'));
+//        Session::flash('message', 'value');
+        Session::reflash('message', 'value');
+//        $titleHead =  Lang::get('messages.welcome');
+//        $titleHead =  Lang::get('messages.hello', ['name' => 'Vadik']);
+//        $titleHead =  Lang::choice('messages.apples', 18);
+
+        if (Lang::has('messages.apples')) {
+            $titleHead = Lang::choice('messages.apples', 18);
+        }
+
+
+        return view('default.contact', ['titleHead' => $titleHead]);
     }
+
+
 }

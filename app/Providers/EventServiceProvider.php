@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\onAddArticle' => [
+            'App\Listeners\AddArticleListener',
+        ]
+
     ];
 
     /**
@@ -29,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Event::listen('onAddArticle', function ($article, $user) {
+
+            Log::info("Article save in DB:", [$user->name =>  $article->name]);
+        });
     }
 }

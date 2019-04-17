@@ -13,7 +13,7 @@ class ContactRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-                'name'=>'required'
+            'name' => 'required',
+            'email' => 'max:5|required'
         ];
     }
+
+    public function messages()
+    {
+       return
+       [
+           'name.required' => 'Поле :attribute обязательно к заполнению'
+       ];
+
+    }
+
 }
